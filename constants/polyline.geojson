@@ -1,0 +1,31 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "LineString",
+          "coordinates": [
+            [6.144447326660157, 31.720599703950043],
+            [6.163363030854672, 31.728639773261925]
+          ]
+        },
+        "properties": {
+          "segmentId": 1
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "LineString",
+          "coordinates": [
+            [6.163363030854672, 31.728639773261925],
+            [6.155125241677961, 31.7251383230766]
+          ]
+        },
+        "properties": {
+          "segmentId": 2
+        }
+      }
+    ]
+  }

@@ -1,0 +1,72 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@layer components {
+
+}
+.draggable-modal {
+  position: fixed; /* or absolute */
+  top: 50%; /* Adjust as needed */
+  left: 50%; /* Adjust as needed */
+  transform: translate(-50%, -50%);
+}
+/* Customize the EditControl buttons */
+.leaflet-tooltip.my-labels {
+  background-color: transparent;
+  border: transparent;
+  box-shadow: none;
+  font-weight: bold;
+  font-size: 20px;
+  color: white; /* Main text color */
+  padding: 0;
+  margin: 0;
+  line-height: 1;
+  text-shadow: 
+    -2px -2px 0 #000,  
+     2px -2px 0 #000,
+    -2px  2px 0 #000,
+     2px  2px 0 #000;
+}
+
+/* Remove the arrow of the tooltip */
+.leaflet-tooltip-top:before,
+.leaflet-tooltip-bottom:before,
+.leaflet-tooltip-left:before,
+.leaflet-tooltip-right:before {
+    display: none;
+}
+
+/* Adjust the position to be directly under the marker */
+.leaflet-tooltip-bottom {
+    margin-top: 10px;
+}
+
+  .account-form_input {
+    @apply border text-black font-semibold text-lg placeholder-gray-400 !important;
+  }
+
+  .no-focus {
+    @apply focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0 !important;
+  }
+
+  
+  @layer utilities {
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    .no-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+   /* Hide scrollbar for IE, Edge and Firefox */
+    .no-scrollbar {
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
+  }
+
+  .chart-container {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+
+
+  
