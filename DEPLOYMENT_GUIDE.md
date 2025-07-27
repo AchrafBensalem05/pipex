@@ -57,18 +57,18 @@ git push origin main
 
 ### 2. **Deploy on Vercel:**
 1. Go to [vercel.com](https://vercel.com)
-2. Connect your GitHub repository
-3. Set environment variables in Vercel dashboard:
-   - `NEXT_PUBLIC_FRONTEND_URL`: Your Vercel app URL
-   - `NEXT_PUBLIC_API_URL`: Your backend URL (or leave empty for mock data)
-   - `NEXT_PUBLIC_SOCKET_URL`: Your socket server URL (or leave empty)
+2. Connect your GitHub repository: `AchrafBensalem05/pipex`
+3. Click "Deploy" (no environment variables needed - app uses mock data)
+4. Your app will be live in ~2 minutes!
 
-### 3. **Environment Variables in Vercel:**
+### 3. **Optional - Environment Variables in Vercel:**
+If you want to customize URLs later, you can add these in the Vercel dashboard:
 ```
 NEXT_PUBLIC_FRONTEND_URL=https://your-app-name.vercel.app
 NEXT_PUBLIC_API_URL=https://your-backend-api.com
 NEXT_PUBLIC_SOCKET_URL=https://your-backend-api.com
 ```
+**Note:** These are optional - the app works perfectly with mock data without any environment variables.
 
 ## 📝 **What the App Now Uses:**
 

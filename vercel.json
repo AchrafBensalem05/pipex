@@ -7,10 +7,5 @@
     "app/**": {
       "runtime": "nodejs18.x"
     }
-  },
-  "env": {
-    "NEXT_PUBLIC_FRONTEND_URL": "@frontend-url",
-    "NEXT_PUBLIC_API_URL": "@api-url", 
-    "NEXT_PUBLIC_SOCKET_URL": "@socket-url"
   }
 }
