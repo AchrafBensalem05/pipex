@@ -39,9 +39,9 @@ import DataContextProvider from "@/context/DataContextProvider";
 import { useAuth } from "@/context/AuthContext";
 
 const formSchema = z.object({
-  file: z.instanceof(FileList, {
+  file: typeof window !== 'undefined' ? z.instanceof(FileList, {
     message: "Please select a file for upload",
-  }),
+  }) : z.any().optional(),
   date: z.date({ message: "date is required" }),
   observation: z.string().max(160, {
     message: "message must not be longer than 30 characters.",

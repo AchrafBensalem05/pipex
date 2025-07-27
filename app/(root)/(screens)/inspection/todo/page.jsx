@@ -1,26 +1,56 @@
 "use client";
-import LeftSideBar from "@/components/shared/LeftSideBar";
 import React, { memo, useContext, useEffect, useState } from "react";
 import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
-import DemandeInspection from "@/components/Inspection/Demande";
-import { CreateInspection } from "@/components/Inspection/CreateInspection";
 import { mockWells, mockManifolds, mockPipes, mockInspectionStats } from "@/lib/mockData";
-import { ConstructionRaportStatus } from "@/components/Inspection/ConstructionRaportStatus";
-import { CreatePeriodicInspection } from "@/components/Inspection/CreatePeriodicInspection";
-import PeriodicInspection from "@/components/Inspection/PeriodicInspection";
 import { useRouter } from "next/navigation";
-import TableInspection from "@/components/Inspection/TableInspection";
-import TodoInspectionTable from "@/components/Inspection/TodoInspectionFile";
 import Link from "next/link";
 import { useAuth } from "@/context/AuthContext";
+import dynamic from "next/dynamic";
+
+// Dynamic imports for components that might use window
+const LeftSideBar = dynamic(() => import("@/components/shared/LeftSideBar"), {
+  ssr: false,
+  loading: () => <div>Loading...</div>
+});
+const DemandeInspection = dynamic(() => import("@/components/Inspection/Demande"), {
+  ssr: false,
+  loading: () => <div>Loading...</div>
+});
+const CreateInspection = dynamic(() => import("@/components/Inspection/CreateInspection").then(mod => ({ default: mod.CreateInspection })), {
+  ssr: false,
+  loading: () => <div>Loading...</div>
+});
+const ConstructionRaportStatus = dynamic(() => import("@/components/Inspection/ConstructionRaportStatus").then(mod => ({ default: mod.ConstructionRaportStatus })), {
+  ssr: false,
+  loading: () => <div>Loading...</div>
+});
+const CreatePeriodicInspection = dynamic(() => import("@/components/Inspection/CreatePeriodicInspection").then(mod => ({ default: mod.CreatePeriodicInspection })), {
+  ssr: false,
+  loading: () => <div>Loading...</div>
+});
+const PeriodicInspection = dynamic(() => import("@/components/Inspection/PeriodicInspection"), {
+  ssr: false,
+  loading: () => <div>Loading...</div>
+});
+const TableInspection = dynamic(() => import("@/components/Inspection/TableInspection"), {
+  ssr: false,
+  loading: () => <div>Loading...</div>
+});
+const TodoInspectionTable = dynamic(() => import("@/components/Inspection/TodoInspectionFile"), {
+  ssr: false,
+  loading: () => <div>Loading...</div>
+});
+
 const page = () => {
-  const {user}=useAuth()
+  const { user } = useAuth();
   const [wells, setWells] = useState([]);
   const [manifolds, setManifolds] = useState([]);
   const [pipes, setPipes] = useState([]);
   const [stats, setStats] = useState([]);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     const fetchData = async () => {
       try {
         // Use mock data instead of API calls
@@ -35,11 +65,15 @@ const page = () => {
     };
     fetchData();
   }, []);
+
   useEffect(() => {
     console.log("iloveeeeeeeeee u", stats);
-  }, [stats]); // useEffect(() => {
-  //   console.log("Updated pipppes state:", pipes);
-  //   console.log("Updated wells state:", wells);
+  }, [stats]);
+
+  if (!mounted) {
+    return <div>Loading...</div>;
+  }
+
   console.log("hate uuuuuuuuuuu");
   const router = useRouter();
   const handleDirection = () => {

@@ -62,9 +62,9 @@ const formSchema = z.object({
   type: z.string({
     message: "type is required",
   }),
-  pv_file: z.instanceof(FileList, {
+  pv_file: typeof window !== 'undefined' ? z.instanceof(FileList, {
     message: "Please select a file for upload",
-  }),
+  }) : z.any().optional(),
 });
 const languages = [
   { label: "English", value: "en" },

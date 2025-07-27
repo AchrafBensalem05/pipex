@@ -1,20 +1,44 @@
 "use client"; // Add this line at the top
 
-import React, { useState } from "react";
-import PipeForm from "../../../../../components/PipeForm";
+import React, { useState, useEffect } from "react";
 import CreatePipeFormContextProvider from "../../../../../context/CreatePipeFormContextProvider";
 import CoordContextProvider from "../../../../../context/CoordContextProvider";
-import DragModal from "../../../../../components/DragModal";
-import Map from "../../../../../components/Map";
-
 import WellContextProvider from "../../../../../context/WellContextProvider";
 import DataContextProvider from "@/context/DataContextProvider";
 import dynamic from "next/dynamic";
 
+// Dynamically import components that use window/browser APIs
+const PipeForm = dynamic(() => import("../../../../../components/PipeForm"), {
+  ssr: false,
+  loading: () => <div>Loading form...</div>
+});
+
+const DragModal = dynamic(() => import("../../../../../components/DragModal"), {
+  ssr: false,
+  loading: () => <div>Loading modal...</div>
+});
+
+const Map = dynamic(() => import("../../../../../components/Map"), {
+  ssr: false,
+  loading: () => <div>Loading map...</div>
+});
+
 const Page = () => {
+  const [mounted, setMounted] = useState(false);
   const [totalDistance, setTotalDistance] = useState(0);
   const activeLayer = "OpenStreetMap";
   const [activeButton, setActiveButton] = useState("Map");
+  
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Don't render until mounted on client
+  if (!mounted) {
+    return <div className="flex h-screen w-full items-center justify-center">
+      <div>Loading drawing interface...</div>
+    </div>;
+  }
   const [selectedNetworks, setSelectedNetworks] = useState([
     "Gas",
     "Oil",

@@ -50,9 +50,9 @@ const formSchema = z.object({
     .max(160, {
       message: "message must not be longer than 30 characters.",
     }),
-  rapport_file: z.instanceof(FileList, {
+  rapport_file: typeof window !== 'undefined' ? z.instanceof(FileList, {
     message: "Please select a file for upload",
-  }),
+  }) : z.any().optional(),
 });
 const languages = [
   { label: "English", value: "en" },

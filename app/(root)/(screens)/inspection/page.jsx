@@ -1,48 +1,70 @@
 "use client";
-import LeftSideBar from "@/components/shared/LeftSideBar";
 import React, { memo, useContext, useEffect, useState } from "react";
 import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
-import DemandeInspection from "@/components/Inspection/Demande";
-import { CreateInspection } from "@/components/Inspection/CreateInspection";
-import { axiosInstance } from "@/Api/Index";
+import { mockWells, mockManifolds, mockPipes, mockInspectionStats } from "@/lib/mockData";
 import Image from "next/image";
-import { ConstructionRaportStatus } from "@/components/Inspection/ConstructionRaportStatus";
-import { CreatePeriodicInspection } from "@/components/Inspection/CreatePeriodicInspection";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useAuth } from "@/context/AuthContext";
+import dynamic from "next/dynamic";
+
+// Dynamic imports for components that might use window
+const LeftSideBar = dynamic(() => import("@/components/shared/LeftSideBar"), {
+  ssr: false,
+  loading: () => <div>Loading...</div>
+});
+const DemandeInspection = dynamic(() => import("@/components/Inspection/Demande"), {
+  ssr: false,
+  loading: () => <div>Loading...</div>
+});
+const CreateInspection = dynamic(() => import("@/components/Inspection/CreateInspection").then(mod => ({ default: mod.CreateInspection })), {
+  ssr: false,
+  loading: () => <div>Loading...</div>
+});
+const ConstructionRaportStatus = dynamic(() => import("@/components/Inspection/ConstructionRaportStatus").then(mod => ({ default: mod.ConstructionRaportStatus })), {
+  ssr: false,
+  loading: () => <div>Loading...</div>
+});
+const CreatePeriodicInspection = dynamic(() => import("@/components/Inspection/CreatePeriodicInspection").then(mod => ({ default: mod.CreatePeriodicInspection })), {
+  ssr: false,
+  loading: () => <div>Loading...</div>
+});
+
 const page = () => {
   const { user } = useAuth();
   const [wells, setWells] = useState([]);
   const [manifolds, setManifolds] = useState([]);
   const [pipes, setPipes] = useState([]);
   const [stats, setStats] = useState([]);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    const fetchWells = async () => {
+    setMounted(true);
+    const fetchData = async () => {
       try {
-        const response = await axiosInstance.get("/well/get-wells");
-        const dataa = await axiosInstance.get("/manifold/getAll");
-        const dataaa = await axiosInstance.get("/pipe/getAll");
-        const stats = await axiosInstance.get("/inspection/stats");
-        setWells(response.data);
-        setManifolds(dataa.data);
-        setPipes(dataaa.data);
-        setStats(stats.data);
+        // Use mock data instead of API calls
+        console.log("Using mock data for inspection page");
+        setWells(mockWells);
+        setManifolds(mockManifolds);
+        setPipes(mockPipes);
+        setStats(mockInspectionStats);
       } catch (error) {
-        console.error("Error fetching posts:", error);
+        console.error("Error setting mock data:", error);
       }
     };
-    fetchWells();
+    fetchData();
   }, []);
+
   useEffect(() => {
     console.log("iloveeeeeeeeee u", stats);
-  }, [stats]); // useEffect(() => {
-  //   console.log("Updated pipppes state:", pipes);
-  //   console.log("Updated wells state:", wells);
+  }, [stats]);
+
+  if (!mounted) {
+    return <div>Loading...</div>;
+  }
+
   console.log("hate uuuuuuuuuuu");
 
-  // }, [wells, pipes]);
   const router = useRouter();
   const handleDirection = () => {
     router.push("/inspection/upload");
