@@ -1,5 +1,5 @@
 "use client";
-import { axiosInstance } from "@/Api/Index";
+import { mockTelemetryData } from "@/lib/mockData";
 import WellContext from "@/context/WellContext";
 import React, { useContext, useEffect, useState } from "react";
 import {
@@ -65,15 +65,16 @@ function Chart({ indice2,indice1 }) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axiosInstance.get(`/telemetry/getAll`);
-        console.log(response.data,'uuuuuuuuuuuiiiiiiiiiiiipppppppp')
-        await setData(response.data.reverse());
-        if (response.data.length > 0) {
-          const lastItem = response.data[response.data.length - 1];
-
-        }else(console.log('oooooooo'))
+        // Use mock data instead of API call
+        console.log("Using mock telemetry data");
+        setData(mockTelemetryData.reverse());
+        if (mockTelemetryData.length > 0) {
+          const lastItem = mockTelemetryData[mockTelemetryData.length - 1];
+        } else {
+          console.log('No telemetry data available');
+        }
       } catch (error) {
-        console.error("Error fetching manifolds", error);
+        console.error("Error setting mock telemetry data", error);
       }
     };
 

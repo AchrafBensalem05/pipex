@@ -48,7 +48,7 @@ function page() {
       const { data } = await axiosInstance.post("/auth/users/signin", values);
       console.log("daaaaaaaata", data);
       form.reset();
-      router.push("http://localhost:3000");
+      router.push("/");
     } catch (error) {
       if (error.response) {
         const { error: errorCode, message } = error.response.data;

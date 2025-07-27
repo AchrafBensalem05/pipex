@@ -45,7 +45,7 @@ const page = () => {
   // }, [wells, pipes]);
   const router = useRouter();
   const handleDirection = () => {
-    router.push("http://localhost:3000/inspection/upload");
+    router.push("/inspection/upload");
   };
   return (
     <div className="flex flex-row bg-gray-100 overflow-y-auto h-screen w-full no-scrollbar">

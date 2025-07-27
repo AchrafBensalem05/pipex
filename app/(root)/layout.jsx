@@ -14,7 +14,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
-        <script src="http://localhost:8097"></script>
+        {/* Removed localhost script for production */}
       </head>
       <body
         className={` mx-auto max-w-[24400px] hide-scrollbar overflow-x-hidden overflow-y-hidden`}

@@ -2,7 +2,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, Controller } from "react-hook-form";
 import { z } from "zod";
-import { revalidatePath } from "next/cache";
+// Remove revalidatePath import as it's server-side only
 import { Check, ChevronsUpDown } from "lucide-react";
 import {
   Select,

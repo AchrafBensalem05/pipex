@@ -1,7 +1,8 @@
 "use client";
 import React, { createContext, useState, useEffect, useContext } from "react";
 import { jwtDecode } from "jwt-decode";
-import { axiosInstance } from "@/Api/Index";
+import { mockUser } from "@/lib/mockData";
+
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
@@ -9,45 +10,35 @@ export function AuthProvider({ children }) {
 
   useEffect(() => {
     const decodeTokenAndSetUser = async () => {
-      console.log("jwtDecode:", jwtDecode);
+      console.log("Using mock authentication");
+      
+      // Simulate checking for authentication - in this case we'll just set the mock user
+      // You can modify this logic based on your needs
       const cookies = document.cookie.split("; ");
-      console.log("All cookies:", cookies);
-  
       const jwtCookie = cookies.find((row) => row.startsWith("jwt="));
-      console.log("JWT cookie:", jwtCookie);
-  
       const token = jwtCookie?.split("=")[1];
-      console.log("Extracted token:", token);
   
       if (token) {
         try {
           const decodedToken = jwtDecode(token);
-          console.log("Decoded token:", decodedToken);
           const currentTime = Math.floor(Date.now() / 1000);
-          console.log("Token expiration:", decodedToken.exp);
-          console.log("Current time:", currentTime);
-          console.log("Time until expiration:", decodedToken.exp - currentTime);
   
           if (decodedToken.exp > currentTime) {
-            console.log("Token is still valid");
-            try {
-              const response = await axiosInstance.get(`/auth/${decodedToken.id}`);
-              setUser(response.data.user);
-              console.log("User set:", response.data.user);
-            } catch (error) {
-              console.error("Error fetching user data:", error);
-              setUser(null);
-            }
+            console.log("Token is still valid, using mock user");
+            setUser(mockUser);
           } else {
             console.log("Token has expired");
             setUser(null);
           }
         } catch (error) {
           console.error("Error decoding token:", error);
-          setUser(null);
+          // Fallback to mock user for demo purposes
+          setUser(mockUser);
         }
       } else {
-        console.log("No token found");
+        console.log("No token found, using mock user for demo");
+        // For demo purposes, always set mock user
+        setUser(mockUser);
         setUser(null);
       }
     };

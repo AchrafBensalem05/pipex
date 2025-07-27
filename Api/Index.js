@@ -1,13 +1,8 @@
-import axios from "axios";
+import { mockSignIn, mockSignUp, mockApiService } from "@/lib/mockApi";
 
-const API=axios.create({baseURL: 'http://localhost:3000'})
-export const SignIn =(formData)=>API.post('users/signin',formData)
-export const SignUp =(formData)=>API.post('users/signUp',formData)
+// Use mock functions instead of real API calls
+export const SignIn = mockSignIn;
+export const SignUp = mockSignUp;
 
-export const axiosInstance = axios.create({
-    baseURL: "http://localhost:8080", // Replace with your backend URL
-    withCredentials: true, 
-    // headers: {
-    //   'Content-Type': 'multipart/form-data',
-    // },// Allow sending and receiving cookies
-  });
+// Mock axios instance
+export const axiosInstance = mockApiService;

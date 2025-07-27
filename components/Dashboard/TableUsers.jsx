@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { revalidatePath } from "next/cache";
+// Remove revalidatePath import as it's server-side only
 import {
   Table,
   TableBody,

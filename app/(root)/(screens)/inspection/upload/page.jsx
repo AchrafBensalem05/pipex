@@ -4,13 +4,14 @@ import React, { memo, useContext, useEffect, useState } from "react";
 import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
 import DemandeInspection from "@/components/Inspection/Demande";
 import { CreateInspection } from "@/components/Inspection/CreateInspection";
-import { axiosInstance } from "@/Api/Index";
+import { mockWells, mockManifolds, mockPipes, mockInspectionStats } from "@/lib/mockData";
 import { ConstructionRaportStatus } from "@/components/Inspection/ConstructionRaportStatus";
 import { CreatePeriodicInspection } from "@/components/Inspection/CreatePeriodicInspection";
 import PeriodicInspection from "@/components/Inspection/PeriodicInspection";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useAuth } from "@/context/AuthContext";
+
 const page = () => {
   const [wells, setWells] = useState([]);
   const [manifolds, setManifolds] = useState([]);
@@ -19,21 +20,19 @@ const page = () => {
   const {user}=useAuth()
 
   useEffect(() => {
-    const fetchWells = async () => {
+    const fetchData = async () => {
       try {
-        const response = await axiosInstance.get("/well/get-wells");
-        const dataa = await axiosInstance.get("/manifold/getAll");
-        const dataaa = await axiosInstance.get("/pipe/getAll");
-        const stats = await axiosInstance.get("/inspection/stats");
-        setWells(response.data);
-        setManifolds(dataa.data);
-        setPipes(dataaa.data);
-        setStats(stats.data);
+        // Use mock data instead of API calls
+        console.log("Using mock data for inspection upload page");
+        setWells(mockWells);
+        setManifolds(mockManifolds);
+        setPipes(mockPipes);
+        setStats(mockInspectionStats);
       } catch (error) {
-        console.error("Error fetching posts:", error);
+        console.error("Error setting mock data:", error);
       }
     };
-    fetchWells();
+    fetchData();
   }, []);
   useEffect(() => {
     console.log("iloveeeeeeeeee u", stats);
@@ -46,7 +45,7 @@ const page = () => {
   console.log("hate uuuuuuuuuuu");
   const router = useRouter();
   const handleDirection = () => {
-    router.push("http://localhost:3000/inspection");
+    router.push("/inspection");
   };
   // }, [wells, pipes]);
   return (

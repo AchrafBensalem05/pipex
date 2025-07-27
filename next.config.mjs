@@ -5,10 +5,18 @@ const withBundleAnalyzerConfig = withBundleAnalyzer({
 });
 
 const nextConfig = {
-  swcMinify: true,
-  productionBrowserSourceMaps: false, // Disable source maps in development
-  optimizeFonts: false, 
-  // Disable font optimization
+  // Handle client-side only components
+  productionBrowserSourceMaps: false,
+  // Handle Leaflet and other client-side libraries
+  webpack: (config, { isServer }) => {
+    if (!isServer) {
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        fs: false,
+      };
+    }
+    return config;
+  },
 };
 
 export default withBundleAnalyzerConfig(nextConfig);

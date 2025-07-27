@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from 'react';
-import {io} from 'socket.io-client';
-import axios from 'axios';
+import { mockNotifications } from '@/lib/mockData';
 import { useAuth } from './AuthContext';
+
 const NotificationContext = createContext();
 
 export const useNotifications = () => {
@@ -11,29 +11,35 @@ export const useNotifications = () => {
 export const NotificationProvider = ({ children }) => {
   const [notifications, setNotifications] = useState([]);
   const { user } = useAuth();
+  
   useEffect(() => {
+    // Simulate socket connection - just set mock notifications
+    console.log("Using mock notifications");
+    setNotifications(mockNotifications);
 
-    // Connect to the socket.io server
-    const socket = io('http://localhost:8080');
-
-    // Listen for 'notification' event from the server
-    socket.on('notification', (message) => {
-      console.log("Received notification:", message); // Debugging
-      setNotifications((prevNotifications) => [...prevNotifications, message]);
-    });
+    // Simulate receiving new notifications periodically
+    const interval = setInterval(() => {
+      const newNotification = {
+        _id: `notif_${Date.now()}`,
+        message: `New system alert at ${new Date().toLocaleTimeString()}`,
+        type: "info",
+        timestamp: new Date().toISOString(),
+        read: false
+      };
+      setNotifications(prev => [newNotification, ...prev]);
+    }, 30000); // Add new notification every 30 seconds
 
     return () => {
-      // Cleanup the socket connection when the component unmounts
-      socket.disconnect();
+      clearInterval(interval);
     };
   }, []);
 
   useEffect(() => {
     const fetchNotifications = async () => {
       try {
-        console.log('islqqqqqqqqqqqqqqqqqqm')
-        // Fetch all notifications
-        const response = await axios.get(`http://localhost:8080/notifications/user/${user._id}`);
+        console.log('Using mock notifications data')
+        // Use mock data instead of API call
+        setNotifications(mockNotifications);
         console.log("Fetched notifications:", response.data); // Debugging
         setNotifications(response.data);
       } catch (error) {
