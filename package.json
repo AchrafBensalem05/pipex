@@ -16,7 +16,6 @@
     "@hookform/resolvers": "^3.3.4",
     "@mui/icons-material": "^5.15.12",
     "@mui/material": "^5.15.21",
-    "@mui/material-nextjs": "^5.15.11",
     "@mui/x-tree-view": "^7.8.0",
     "@nextui-org/divider": "^2.0.27",
     "@nextui-org/react": "^2.2.10",
